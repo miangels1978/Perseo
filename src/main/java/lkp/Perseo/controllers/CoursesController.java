@@ -9,30 +9,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/api/courses")
 
 public class CoursesController {
     @Autowired
     private CoursesService coursesService;
 
-    @GetMapping
+    @GetMapping (path = "/getAll")
     public List<Courses> getAllCourses() {
         return coursesService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(path ="/getCourse/{id}")
     public ResponseEntity<Courses> getCourseById(@PathVariable Long id) {
         return coursesService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping (path = "/createCourse")
     public Courses createCourse(@RequestBody Courses course) {
         return coursesService.save(course);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path ="/updateCourse/{id}")
     public ResponseEntity<Courses> updateCourse(@PathVariable Long id, @RequestBody Courses courseDetails) {
         return coursesService.findById(id)
                 .map(course -> {
@@ -42,7 +42,7 @@ public class CoursesController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping(path ="/delete/{id}")
     public ResponseEntity<Object> deleteCourse(@PathVariable Long id) {
         return coursesService.findById(id)
                 .map(course -> {
@@ -51,5 +51,7 @@ public class CoursesController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
-
+    @DeleteMapping (path = "/deleteAll")
+    public void deleteAllDonations() {
+        coursesService.deleteAllCourse(); }
 }

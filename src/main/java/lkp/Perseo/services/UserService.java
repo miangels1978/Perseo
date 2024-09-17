@@ -3,6 +3,7 @@ package lkp.Perseo.services;
 import lkp.Perseo.models.User;
 import lkp.Perseo.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class UserService {
     }
 
     public User findByUsername(String username) {
-        return iUserRepository.findByUsername(username);
+        return iUserRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException ("No existe el usuario con el nombre: " + username));
     }
 }

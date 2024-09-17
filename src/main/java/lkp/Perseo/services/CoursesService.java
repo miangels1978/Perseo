@@ -28,4 +28,8 @@ public class CoursesService {
     public void deleteById(Long id) {
         iCoursesRepository.deleteById(id);
     }
+
+    public void deleteAllCourse() {
+        iCoursesRepository.deleteAll();
+    }
 }

@@ -28,4 +28,8 @@ public class ProfileService {
     public void deleteById(Long id) {
         iProfileRepository.deleteById(id);
     }
+
+    public void deleteAllProfile() {
+        iProfileRepository.deleteAll();
+    }
 }

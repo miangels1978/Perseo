@@ -9,30 +9,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/profiles")
+@RequestMapping("/api/profiles")
 public class ProfileController {
 
     @Autowired
     private ProfileService profileService;
 
-    @GetMapping
+    @GetMapping(path = "/profileAll")
     public List<Profile> getAllProfiles() {
         return profileService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/profileId/{id}")
     public ResponseEntity<Profile> getProfileById(@PathVariable Long id) {
         return profileService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping(path = "/newProfile")
     public Profile createProfile(@RequestBody Profile profile) {
         return profileService.save(profile);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path ="/updateProfile/{id}")
     public ResponseEntity<Profile> updateProfile(@PathVariable Long id, @RequestBody Profile profileDetails) {
         return profileService.findById(id)
                 .map(profile -> {
@@ -45,7 +45,7 @@ public class ProfileController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(path ="/delete/{id}")
     public ResponseEntity<Object> deleteProfile(@PathVariable Long id) {
         return profileService.findById(id)
                 .map(profile -> {
@@ -53,5 +53,9 @@ public class ProfileController {
                     return ResponseEntity.ok().build();
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+    @DeleteMapping(path ="/deleteAll")
+    public void deleteAllPets() {
+        profileService.deleteAllProfile();
     }
 }
